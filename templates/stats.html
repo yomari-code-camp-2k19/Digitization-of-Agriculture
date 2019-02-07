@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>Statistics</title>
+    <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
+</head>
+
+<body>
+
+<br><br>
+
+<h6>Your district data on various food crops Yeilds</h6>
+
+<select id="districts" name="code">
+</select>
+
+<div id="graphs">
+	<div>
+		<h4 id="paddypro"></h4>
+		<div id="Paddy"></div>
+	</div>
+	<div>
+		<h4 id="wheatpro"></h4>
+		<div id="Wheat"></div>			
+	</div>
+	<div>
+		<h4 id="milletpro"></h4>
+		<div id="Millet"></div>	
+	</div>
+	<div>
+		<h4 id="maizepro"></h4>
+		<div id="Maize"></div>	
+	</div>
+	<div>
+		<h4 id="barleypro"></h4>
+		<div id="Barley"></div>	
+	</div>
+	
+</div>
+
+
+<!-- bootstrap scripts -->
+<script type="text/javascript" src="static/jquery.min.js"></script>
+<script type="text/javascript" src="static/bootstrap.min.js"></script>
+<script type="text/javascript" src="static/plotly.js"></script>
+<script type="text/javascript">
+	const districtCode={"0":"Taplejung","1":"Panchthar","2":"Ilam","3":"Jhapa","4":"Sankhuwasabha","5":"Bhojpur","6":"Dhankuta","7":"Tehrathum","8":"Morang","9":"Sunsari","10":"Solukhumbu","11":"Okhaldhunga","12":"Khotang","13":"Udayapur","14":"Saptari","15":"Siraha","16":"Dolakha","17":"Ramechhap","18":"Sindhuli","19":"Dhanusa","20":"Mahottari","21":"Sarlahi","22":"Sindhupalchok","23":"Kavre","24":"Bhaktapur","25":"Lalitpur","26":"Kathmandu","27":"Rasuwa","28":"Nuwakot","29":"Dhading","30":"Rautahat","31":"Bara","32":"Parsa","33":"Makwanpur","34":"Chitwan","35":"Gorkha","36":"Lamjung","37":"Tanahu","38":"Manang","39":"Kaski","40":"Syangja","41":"Nawalparasi","42":"Palpa","43":"Rupandehi","44":"Gulmi","45":"Arghakhanchi","46":"Kapilbastu","47":"Mustang","48":"Myagdi","49":"Parbat","50":"Baglung","51":"Dolpa","52":"Mugu","53":"Jumla","54":"Kalikot","55":"Humla","56":"Rukum","57":"Rolpa","58":"Pyuthan","59":"Dang","60":"Salyan","61":"Jajarkot","62":"Dailekh","63":"Surkhet","64":"Banke","65":"Bardiya","66":"Bajura","67":"Achham","68":"Bajhang","69":"Doti","70":"Kailali","71":"Darchula","72":"Baitadi","73":"Dadeldhura","74":"Kanchanpur"};
+	
+	let dis="<option disabled selected >Select District</option>";
+	Object.keys(districtCode).forEach(function(key) {
+		dis+="<option value="+key+">"+districtCode[key]+"</option>";	
+	});
+	document.getElementById('districts').innerHTML=dis;
+
+	$('#districts').change(function(){
+		getDataForDistrict(this.value);
+	});
+
+	function getDataForDistrict(code){
+		 
+		fetch('http://localhost:8080/stats/'+code)
+			.then(res=>res.json())
+			.then(res=>{
+				// Object.keys(res).forEach(function(key){
+				// 	$('#graphs').before('<div id='+key+'></div>');
+				// 	Plotly.newPlot("'"+key+"'", res.Paddy);
+				// });
+				// //for Paddy
+				// x1=[],y1=[];
+				document.getElementById('paddypro').innerHTML="Paddy Production in "+districtCode[code];
+				Plotly.newPlot('Paddy',res.Paddy);
+				document.getElementById('wheatpro').innerHTML="Wheat Production in "+districtCode[code];
+				Plotly.newPlot('Wheat',res.Wheat);
+				document.getElementById('milletpro').innerHTML="Millet Production in "+districtCode[code];
+				Plotly.newPlot('Millet',res.Millet);
+				document.getElementById('maizepro').innerHTML="Maize Production in "+districtCode[code];
+				Plotly.newPlot('Maize',res.Maize);
+				document.getElementById('barleypro').innerHTML="Barley Production in "+districtCode[code];
+				Plotly.newPlot('Barley',res.Barley);
+			});
+	}
+</script>
+</body>
+</html>
