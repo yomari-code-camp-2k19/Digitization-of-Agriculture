@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Agricultural Intelligence System</title>
+    <title>Ubjani</title>
     <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
     <style>
       /* Set the size of the div element that contains the map */
@@ -24,21 +24,22 @@
           <li class="nav-item active">
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
+<!--           <li class="nav-item">
             <a class="nav-link" href="/stats">Statistics</a>
-          </li>
-          <li class="nav-item">
+          </li> -->
+<!--           <li class="nav-item">
             <a class="nav-link" href="#">Team</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" href="#">Fertilizers</a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </nav>
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
-        <h1 class="display-4">Intelligent Agriculture Guidance System</h1>
+        <img src="../static/ubjani.jpg" class="rounded-circle img-fluid float-left" alt="ubjani logo" width="200px" height="200px">
+        <h1 class="display-4">Ubjani</h1>
         <p class="lead">Farming Simplified</p>
       </div>
     <div class="container">
@@ -62,36 +63,36 @@
       
       <div class="col-sm-6">
         <div id="soilInfoFromGivenLocation">
-          <h4>Soil Information Of The place</h4>
+          <h4>Approximated Information Of The place</h4>
           <div id="soilData">
               <div class="form-group">
-                <label for="ph">pH value</label>
+                <label for="ph">Soil pH value</label>
                 <input type="number" class="form-control" id="ph" aria-describedby="ph" step="0.01" required="true">
                 <small id="phHelp" class="form-text text-muted">You can edit it if you have performed soil test from soil experts</small>
               </div>
               
-              <div class="form-group">
+              <div class="form-group" style="display:none">
                 <label for="bulkDensity">Bulk Density</label>
-                <input type="number" class="form-control" id="bulkDensity" aria-describedby="bulkDensity" step="0.01" required="true">
+                <input type="number" class="form-control" id="bulkDensity" aria-describedby="bulkDensity" step="0.01">
               </div>
               
-              <div class="form-group">
+              <div class="form-group" style="display: none">
                 <label for="organicMatter">Organic Matter</label>
-                <input type="number" class="form-control" id="organicMatter" aria-describedby="organicMatter" step="0.01" required="true">
+                <input type="number" class="form-control" id="organicMatter" aria-describedby="organicMatter" step="0.01" >
               </div>
 
               <div class="form-group">
-                <label for="temp">Temperature</label>
+                <label for="temp">Temperature(Degree celcius)</label>
                 <input type="number" class="form-control" id="temp" aria-describedby="temp" step="0.01" required="true">
               </div>
               
               <div class="form-group">
-                <label for="alt">Altitude</label>
+                <label for="alt">Altitude(meters)</label>
                 <input type="number" class="form-control" id="alt" aria-describedby="alt" step="0.01" required="true">
               </div>
 
               <div class="form-group">
-                <label for="rainfall">Rainfall</label>
+                <label for="rainfall">Rainfall(mm/month)</label>
                 <input type="number" class="form-control" id="rainfall" aria-describedby="rainfall" step="0.01" required="true">
               </div>
 
@@ -104,7 +105,7 @@
                     'temp':parseInt(document.getElementById('temp').value),
                     'alt':parseInt(document.getElementById('alt').value),
                   }
-                  getPredictions("/predict",data);
+                  getPredictions("http://localhost:8080/predict",data);
                 }
               </script>
           </div> 
